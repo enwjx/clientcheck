@@ -1,0 +1,40 @@
+#include "help.h"
+#include <stdio.h>
+
+void show_help(void) {
+    const char* help_text =
+"Usage:\n"
+"  clientcheck -all -output \"result.txt\"\n"
+"  clientcheck -only <m1,m2,...> -output \"result.txt\"\n"
+"\n"
+"Options:\n"
+"  -all                    Execute all supported functions (default)\n"
+"  -output <file>          Write UTF-8 results to file\n"
+"  -only <m1,m2,...>       Run ONLY the listed modules/groups (comma-separated)\n"
+"  -no-<module>            Exclude one module or group (e.g. -no-vnc -no-navicat)\n"
+"  -sensitive-mode <mode>  normal or strict (default: normal)\n"
+"  -browser-format <fmt>   also export browser data as csv or json (dir: out\\)\n"
+"  -modules                List available modules and groups\n"
+"  -help                   Show this help\n"
+"\n"
+"Modules:\n"
+"  todesk, sunlogin, dbeaver, finalshell, xshell, xftp, xmanager,\n"
+"  filezilla, navicat, rdp, winscp, vnc, tortoisesvn, teamviewer,\n"
+"  mobaxterm, chromium, firefox, ie, sensitive\n"
+"Groups:\n"
+"  browser (= chromium,firefox,ie), rdp, sensitive, remote\n"
+"  (= todesk,sunlogin,teamviewer)\n"
+"Options:\n"
+"  -moba-master <pw>  MobaXterm master password (use when the registry\n"
+"                     M hash is stale; key = SHA512(password)[:32])\n"
+"\n"
+"Examples:\n"
+"  clientcheck -all -output \"result.txt\"\n"
+"  clientcheck -all -no-rdp -output \"result.txt\"\n"
+"  clientcheck -only navicat,winscp -output \"result.txt\"\n"
+"  clientcheck -only browser -output \"result.txt\"\n"
+"  clientcheck -all -no-vnc -no-teamviewer -output \"result.txt\"\n"
+"  clientcheck -only browser,sensitive -output \"result.txt\"\n"
+"\n";
+    printf("%s", help_text);
+}
