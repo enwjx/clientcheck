@@ -174,6 +174,18 @@ clientcheck/
    changed after the stored credentials were saved), entries are reported as
    unreadable; re-run with `-moba-master` or let MobaXterm refresh its stored
    hash.
+4. **RDP** — DPAPI decryption of credential files depends on the target user's
+   master keys, so it can fail in several situations: files encrypted in
+   SYSTEM context (`CRYPTPROTECT_SYSTEM`, e.g. credentials written by
+   services) need SYSTEM privileges and are reported undecryptable under a
+   normal admin shell; if the user's password was reset by an administrator or
+   their master keys were purged, decryption fails and the file's masterkey
+   GUID is reported for out-of-band recovery (mimikatz `sekurlsa::dpapi` +
+   `dpapi::cred /masterkey:`); vault/credential entries belonging to other
+   local profiles can only be recovered when the current token is able to
+   impersonate that user's session. Such failures are always reported
+   explicitly with the reason — an undecryptable entry is never silently
+   dropped.
 
 ## Acknowledgments
 

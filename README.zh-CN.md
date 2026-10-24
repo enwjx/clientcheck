@@ -161,6 +161,13 @@ clientcheck/
    未文档化布局，可能随 Windows 版本变化。
 3. **MobaXterm** — 注册表主密码哈希过期时（保存凭据后修改过主密码），相关
    条目报告为不可读；用 `-moba-master` 重跑或让 MobaXterm 刷新存储的哈希。
+4. **RDP** — 凭据文件的 DPAPI 解密依赖目标用户的主密钥，以下情况会解密失败：
+   SYSTEM 上下文加密的文件（`CRYPTPROTECT_SYSTEM`，如服务写入的凭据）需要
+   SYSTEM 权限，普通管理员 shell 下将报告为不可解密；用户密码被管理员重置或
+   主密钥被清除时解密失败，此时报告该文件的 masterkey GUID 供带外恢复
+   （mimikatz `sekurlsa::dpapi` + `dpapi::cred /masterkey:`）；属于其他本地
+   用户配置文件的 Vault/凭据条目，仅当当前 token 能模拟该用户会话时才能恢复。
+   所有解密失败都会明确报告原因——不可解密的条目绝不会被静默丢弃。
 
 ## 致谢（参考项目）
 
